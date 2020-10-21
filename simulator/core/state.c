@@ -74,18 +74,6 @@ static thread_local struct state_change writes[STATE_MAX_WRITES];
 
  static atomic_bool debugging_bool = ATOMIC_VAR_INIT(false);
  static atomic_bool wfi_bool = ATOMIC_VAR_INIT(false);
-#elif defined(CLANG_ATOMIC)
- #ifndef NO_PIPELINE
-  static bool pipeline_flush_flag = false;
- #endif
-
- static _Atomic(bool) debugging_bool;
- static _Atomic(bool) wfi_bool;
- __attribute__ ((constructor))
- static void clang_pipeline_atomic_bools_init(void) {
-	 __c11_atomic_init(&debugging_bool, false);
-	 __c11_atomic_init(&wfi_bool, false);
- }
 #elif defined(GCC_ATOMIC)
  #ifndef NO_PIPELINE
   static bool pipeline_flush_flag = false;
